@@ -34,7 +34,32 @@ class Tree {
     return root;
   }
 
-  insert(value) {}
+  insert(value) {
+    const newNode = new Node(value);
+
+    if (!this.root) {
+      this.root = newNode;
+    } else {
+      let root = this.root;
+      while (root) {
+        if (newNode.value < root.value) {
+          if (root.left) {
+            root = root.left;
+          } else {
+            root.left = newNode;
+            break;
+          }
+        } else {
+          if (root.right) {
+            root = root.right;
+          } else {
+            root.right = newNode;
+            break;
+          }
+        }
+      }
+    }
+  }
 
   delete(value) {}
 
@@ -57,13 +82,27 @@ class Tree {
   rebalance() {}
 }
 
+const prettyPrint = (node, prefix = "", isLeft = true) => {
+  if (node === null) {
+    return;
+  }
+  if (node.right !== null) {
+    prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+  }
+  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.value}`);
+  if (node.left !== null) {
+    prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+  }
+};
+
 // Initialize tree
 let test = new Tree([1, 5, 2, 21, 100, 53, 1, 2, 3, 3, 4, 2, 72]);
 
 // Remove duplicates and sort array
-test.cleanArray();
-console.log(test.arr);
+test.sortArray();
 
 // Create tree
 test.buildTree();
-console.dir(test.root, { depth: null });
+
+// Print tree
+prettyPrint(test.root);

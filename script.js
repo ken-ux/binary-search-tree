@@ -106,7 +106,23 @@ class Tree {
 
   height(node) {}
 
-  depth(node) {}
+  depth(node) {
+    let root = this.root;
+
+    let depth = 0;
+    while (root) {
+      if (root.value === node.value) {
+        return depth;
+      }
+      if (node.value < root.value) {
+        root = root.left;
+      } else {
+        root = root.right;
+      }
+      depth++;
+    }
+    return null;
+  }
 
   isBalanced() {}
 
@@ -134,7 +150,9 @@ test.sortArray();
 
 // Create tree
 test.buildTree();
-test.delete(4);
+
+let testNode = new Node(1);
+console.log(test.depth(testNode));
 
 // Print tree
 prettyPrint(test.root);

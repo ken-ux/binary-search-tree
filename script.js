@@ -105,7 +105,34 @@ class Tree {
     return null;
   }
 
-  levelOrder(callback) {}
+  levelOrder(callback) {
+    const queue = [];
+    let result = [];
+
+    if (this.root) {
+      queue.push(this.root);
+    }
+
+    // Add nodes to queue and their values into an array
+    while (queue.length > 0) {
+      const current = queue[0];
+      result.push(current.value);
+      if (current.left) {
+        queue.push(current.left);
+      }
+      if (current.right) {
+        queue.push(current.right);
+      }
+      queue.shift();
+    }
+
+    // Perform callback on array elements, if provided
+    if (callback) {
+      return result.map(callback);
+    }
+
+    return result;
+  }
 
   inOrder(callback) {}
 
@@ -159,7 +186,9 @@ test.sortArray();
 
 // Create tree
 test.buildTree();
-test.delete(4);
+
+console.log(test.levelOrder());
+console.log(test.levelOrder((num) => num * 2));
 
 // Print tree
 prettyPrint(test.root);

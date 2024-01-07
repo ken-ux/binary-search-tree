@@ -80,7 +80,21 @@ class Tree {
     }
   }
 
-  find(value) {}
+  find(value) {
+    let root = this.root;
+    while (root) {
+      if (root.value === value) {
+        return root;
+      }
+
+      if (value < root.value) {
+        root = root.left;
+      } else {
+        root = root.right;
+      }
+    }
+    return null;
+  }
 
   levelOrder(callback) {}
 
@@ -121,7 +135,6 @@ test.sortArray();
 // Create tree
 test.buildTree();
 test.delete(4);
-
 
 // Print tree
 prettyPrint(test.root);

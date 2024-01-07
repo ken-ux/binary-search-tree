@@ -61,7 +61,24 @@ class Tree {
     }
   }
 
-  delete(value) {}
+  delete(value) {
+    let root = this.root;
+
+    // Removing leaf node
+    while (root) {
+      if (value < root.value) {
+        if (root.left.value === value) {
+          root.left = null;
+        }
+        root = root.left;
+      } else {
+        if (root.right.value === value) {
+          root.right = null;
+        }
+        root = root.right;
+      }
+    }
+  }
 
   find(value) {}
 
@@ -103,6 +120,8 @@ test.sortArray();
 
 // Create tree
 test.buildTree();
+test.delete(4);
+
 
 // Print tree
 prettyPrint(test.root);

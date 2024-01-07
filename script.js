@@ -64,16 +64,25 @@ class Tree {
   delete(value) {
     let root = this.root;
 
-    // Removing leaf node
     while (root) {
       if (value < root.value) {
         if (root.left.value === value) {
-          root.left = null;
+          let temp = root.left;
+
+          // Removing leaf node
+          if (!temp.left && !temp.right) {
+            root.left = null;
+          }
         }
         root = root.left;
       } else {
         if (root.right.value === value) {
-          root.right = null;
+          let temp = root.right;
+
+          // Removing leaf node
+          if (!temp.left && !temp.right) {
+            root.right = null;
+          }
         }
         root = root.right;
       }
@@ -150,9 +159,7 @@ test.sortArray();
 
 // Create tree
 test.buildTree();
-
-let testNode = new Node(1);
-console.log(test.depth(testNode));
+test.delete(4);
 
 // Print tree
 prettyPrint(test.root);

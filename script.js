@@ -133,7 +133,24 @@ class Tree {
     return result;
   }
 
-  inOrder(callback) {}
+  inOrder(callback) {
+    let results = [];
+    this.inOrderRec(results, this.root);
+
+    if (callback) {
+      return results.map(callback);
+    }
+    return results;
+  }
+
+  inOrderRec(stack, root) {
+    if (root === null) {
+      return;
+    }
+    this.inOrderRec(stack, root.left);
+    stack.push(root.value);
+    this.inOrderRec(stack, root.right);
+  }
 
   preOrder(callback) {
     const stack = [this.root];
@@ -158,25 +175,22 @@ class Tree {
   }
 
   postOrder(callback) {
-    // const stack = [this.root];
-    // const result = [];
+    let results = [];
+    this.postOrderRec(results, this.root);
 
-    // while (stack.length > 0) {
-    //   const current = stack.pop();
-    //   if (current.right) {
-    //     stack.push(current.right);
-    //   }
-    //   if (current.left) {
-    //     stack.push(current.left);
-    //   }
-    //   result.push(current.value);
-    // }
+    if (callback) {
+      return results.map(callback);
+    }
+    return results;
+  }
 
-    // if (callback) {
-    //   return result.map(callback);
-    // }
-
-    // return result;
+  postOrderRec(stack, root) {
+    if (root === null) {
+      return;
+    }
+    this.postOrderRec(stack, root.left);
+    this.postOrderRec(stack, root.right);
+    stack.push(root.value);
   }
 
   height(node) {}
@@ -226,16 +240,23 @@ test.sortArray();
 // Create tree
 test.buildTree();
 
+// Test deletions
+test.delete(100);
+test.delete(4);
+
 // Test levelOrder
-console.log(test.levelOrder());
+// console.log(test.levelOrder());
 // console.log(test.levelOrder((num) => num * 2));
 
+// Test inOrder
 // console.log(test.inOrder());
 // console.log(test.inOrder((num) => num * 2));
 
-console.log(test.preOrder());
+// Test preOrder
+// console.log(test.preOrder());
 // console.log(test.preOrder((num) => num * 2));
 
+// Test postOrder
 // console.log(test.postOrder());
 // console.log(test.postOrder((num) => num * 2));
 

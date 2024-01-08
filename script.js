@@ -107,7 +107,7 @@ class Tree {
 
   levelOrder(callback) {
     const queue = [];
-    let result = [];
+    const result = [];
 
     if (this.root) {
       queue.push(this.root);
@@ -115,7 +115,7 @@ class Tree {
 
     // Add nodes to queue and their values into an array
     while (queue.length > 0) {
-      const current = queue[0];
+      const current = queue.shift();
       result.push(current.value);
       if (current.left) {
         queue.push(current.left);
@@ -123,7 +123,6 @@ class Tree {
       if (current.right) {
         queue.push(current.right);
       }
-      queue.shift();
     }
 
     // Perform callback on array elements, if provided
@@ -136,9 +135,49 @@ class Tree {
 
   inOrder(callback) {}
 
-  preOrder(callback) {}
+  preOrder(callback) {
+    const stack = [this.root];
+    const result = [];
 
-  postOrder(callback) {}
+    while (stack.length > 0) {
+      const current = stack.pop();
+      result.push(current.value);
+      if (current.right) {
+        stack.push(current.right);
+      }
+      if (current.left) {
+        stack.push(current.left);
+      }
+    }
+
+    if (callback) {
+      return result.map(callback);
+    }
+
+    return result;
+  }
+
+  postOrder(callback) {
+    // const stack = [this.root];
+    // const result = [];
+
+    // while (stack.length > 0) {
+    //   const current = stack.pop();
+    //   if (current.right) {
+    //     stack.push(current.right);
+    //   }
+    //   if (current.left) {
+    //     stack.push(current.left);
+    //   }
+    //   result.push(current.value);
+    // }
+
+    // if (callback) {
+    //   return result.map(callback);
+    // }
+
+    // return result;
+  }
 
   height(node) {}
 
@@ -187,8 +226,18 @@ test.sortArray();
 // Create tree
 test.buildTree();
 
+// Test levelOrder
 console.log(test.levelOrder());
-console.log(test.levelOrder((num) => num * 2));
+// console.log(test.levelOrder((num) => num * 2));
+
+// console.log(test.inOrder());
+// console.log(test.inOrder((num) => num * 2));
+
+console.log(test.preOrder());
+// console.log(test.preOrder((num) => num * 2));
+
+// console.log(test.postOrder());
+// console.log(test.postOrder((num) => num * 2));
 
 // Print tree
 prettyPrint(test.root);

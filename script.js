@@ -193,7 +193,45 @@ class Tree {
     stack.push(root.value);
   }
 
-  height(node) {}
+  height(node) {
+    let root = this.root;
+    let node_reached = false;
+
+    // Find the node's position in the tree
+    while (!node_reached) {
+      if (root.value === node.value) {
+        node_reached = true;
+      } else if (node.value < root.value) {
+        root = root.left;
+      } else {
+        root = root.right;
+      }
+    }
+
+    let height = this.heightRec(root);
+
+    return height.length - 1;
+  }
+
+  // Given a root node, return an array of the longest path to a leaf node
+  heightRec(root) {
+    if (!root) {
+      return [];
+    }
+
+    let right = this.heightRec(root.right);
+    let left = this.heightRec(root.left);
+
+    // Compare the size of the arrays
+    // and insert current node accordingly
+    if (right.length < left.length) {
+      left.push(root.value);
+    } else {
+      right.push(root.value);
+    }
+
+    return left.length > right.length ? left : right;
+  }
 
   depth(node) {
     let root = this.root;
@@ -241,8 +279,12 @@ test.sortArray();
 test.buildTree();
 
 // Test deletions
-test.delete(100);
-test.delete(4);
+// test.delete(100);
+// test.delete(4);
+
+// Test height
+let testNode = new Node(53);
+console.log(test.height(testNode));
 
 // Test levelOrder
 // console.log(test.levelOrder());

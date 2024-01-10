@@ -101,7 +101,9 @@ class Tree {
           }
           // Handle node with children on both sides
         } else {
-          console.log("Oh, no... There's two nodes.");
+          // Find the inorder successor
+          // 2. Then replace the target node with its inorder successor
+          // 3. Then delete the original node, probably by recursively calling this function on the target node's value
         }
 
         break;
@@ -315,6 +317,7 @@ test.buildTree();
 // test.delete(100);
 // test.delete(4);
 // test.delete(21);
+// test.delete(53);
 
 // Test height
 // let testNode = new Node(2);

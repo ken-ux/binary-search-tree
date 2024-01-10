@@ -62,29 +62,49 @@ class Tree {
   }
 
   delete(value) {
-    let root = this.root;
+    let prev;
+    let curr = this.root;
 
-    while (root) {
-      if (value < root.value) {
-        if (root.left.value === value) {
-          let temp = root.left;
+    while (curr) {
+      // Traverse tree until node is found
+      if (value < curr.value) {
+        prev = curr;
+        curr = curr.left;
+      } else if (value > curr.value) {
+        prev = curr;
+        curr = curr.right;
+      }
 
-          // Removing leaf node
-          if (!temp.left && !temp.right) {
-            root.left = null;
+      // Only reaches when node is found
+      if (curr.value === value) {
+        // Handle leaf nodes
+        if (!curr.right && !curr.left) {
+          if (prev.left && prev.left.value === value) {
+            prev.left = null;
+          } else {
+            prev.right = null;
           }
-        }
-        root = root.left;
-      } else {
-        if (root.right.value === value) {
-          let temp = root.right;
-
-          // Removing leaf node
-          if (!temp.left && !temp.right) {
-            root.right = null;
+          // Handle node with one child
+        } else if ((curr.right && !curr.left) || (!curr.right && curr.left)) {
+          if (prev.left && prev.left.value === value) {
+            if (curr.right) {
+              prev.left = curr.right;
+            } else {
+              prev.left = curr.left;
+            }
+          } else {
+            if (curr.right) {
+              prev.right = curr.right;
+            } else {
+              prev.right = curr.left;
+            }
           }
+          // Handle node with children on both sides
+        } else {
+          console.log("Oh, no... There's two nodes.");
         }
-        root = root.right;
+
+        break;
       }
     }
   }
@@ -294,6 +314,7 @@ test.buildTree();
 // Test deletions
 // test.delete(100);
 // test.delete(4);
+// test.delete(21);
 
 // Test height
 // let testNode = new Node(2);
@@ -323,6 +344,7 @@ test.buildTree();
 
 // Test rebalance
 // test.rebalance();
+// console.log(test.isBalanced());
 
 // Print tree
 prettyPrint(test.root);

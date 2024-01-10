@@ -262,7 +262,11 @@ class Tree {
     }
   }
 
-  rebalance() {}
+  rebalance() {
+    const arr = this.inOrder();
+    this.arr = arr;
+    this.buildTree();
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -316,6 +320,9 @@ test.buildTree();
 // test.delete(3);
 // test.delete(1);
 // console.log(test.isBalanced());
+
+// Test rebalance
+// test.rebalance();
 
 // Print tree
 prettyPrint(test.root);
